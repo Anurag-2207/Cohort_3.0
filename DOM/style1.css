@@ -1,0 +1,42 @@
+*{
+    margin: 0;
+    padding: 0%;
+    box-sizing: border-box;
+}
+html,
+body{
+    height: 100%;
+    width: 100%;
+}
+main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.bulb{
+    height: 400px;
+    width: 400px;
+    border-radius: 50%;
+    border: 4px solid wheat;
+    background: yellow;
+}
+button{
+    margin: 30px 155px;
+    padding: 10px 20px;
+    border-radius: 15%;
+    border: 1px solid wheat;
+    background: white;
+    color: black;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.light{
+    height: 400px;
+    width: 400px;
+    border-radius: 50%;
+    border: 4px solid wheat;
+    background: blue;
+}
