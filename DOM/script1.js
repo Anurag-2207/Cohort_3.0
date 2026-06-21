@@ -1,28 +1,17 @@
-const bulb = document.querySelector(".bulb");
-const btn = document.querySelector("button");
-//  changing the bulb colour using addeveent listner
-
-// var flag=true;
-// btn.addEventListener("click", function () {
-//     if(flag){
-//         bulb.style.backgroundColor ="blue";  
-//     btn.textContent="OFF";
-//         flag=false;
-//     }
-//     else{
-//         bulb.style.backgroundColor ="Yellow";  
-//     btn.textContent="ON";
-//     flag=true;
-//     }
-// });
-
-
-// --classlist se bhi hota hai par ithna matalab hota haii
-btn.addEventListener("click",()=>{
-    if(bulb.classList.toggle("light")){
-        btn.textContent="OFF";
-    }
-    else{
-        btn.textContent="ON";
-    }
+var inpt=document.querySelector("input");
+var btn1=document.querySelector("#add");
+var todo=document.querySelector(".todolist");
+btn1.addEventListener("click" , ()=>{
+    var val=inpt.value;
+    if(val.trim()==="") return;
+    todo.innerHTML +=`<div class="todolist">
+            <div class="li">
+                <h3 id="task">${val}</h3>
+                <div class="btn">
+                    <button>Edit</button>
+                    <button>Delet</button>
+                </div>
+            </div>`
+            inpt.value="";
 })
+
