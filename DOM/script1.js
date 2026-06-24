@@ -1,70 +1,88 @@
+const createbtn = document.querySelector("#create");
+const formdiv = document.querySelector(".form");
+const closebtn = document.querySelector("#close");
 const form = document.querySelector("form");
-const inp1 = document.querySelector("#name");
-const inp2 = document.querySelector("#age");
-const ui = document.querySelector("#img");
-const card = document.querySelector(".card");
+const productdiv = document.querySelector(".products");
 
-let users = [
-  {
-    name: "Ananya Sharma",
-    email: "ananya.sharma@example.com",
-    dob: "2003-05-14",
-    img: "https://randomuser.me/api/portraits/women/1.jpg"
-  },
-  {
-    name: "Rahul Verma",
-    email: "rahul.verma@example.com",
-    dob: "2001-11-22",
-    img: "https://randomuser.me/api/portraits/men/2.jpg"
-  },
-  {
-    name: "Priya Patel",    
-    email: "priya.patel@example.com",
-    dob: "2002-08-09",
-    img: "https://randomuser.me/api/portraits/women/3.jpg"
-  },
-  {
-    name: "Arjun Singh",
-    email: "arjun.singh@example.com",
-    dob: "2000-03-17",
-    img: "https://randomuser.me/api/portraits/men/4.jpg"
-  },
-  {
-    name: "Neha Gupta",
-    email: "neha.gupta@example.com",
-    dob: "2004-01-30",
-    img: "https://randomuser.me/api/portraits/women/5.jpg"
-  }
-];
+const productarr = [];
+var updateIndex = null;
 
-function fnt() {
-    card.innerHTML = "";
+let ui = () => {
 
-    users.forEach((e) => {
-        card.innerHTML += `
-        <div class="user_card">
-            <div class="img_box">
-                <img src="${e.img}" alt="${e.name}">
+  productdiv.innerHTML = "";
+  productarr.forEach((elem,index) => {
+    productdiv.innerHTML += `<div class="product-card">
+            <div class="img">
+                <img 
+                src="${elem.imgurl}" 
+                alt="">
             </div>
             <div class="text">
-                <h3>Name: ${e.name}</h3>
-                <p>Age: ${e.age}</p>
+                <h3>Name : ${elem.productNmae}</h3>
+                <p>Description : ${elem.description}</p>
+                <p>Price : ${elem.price}</p>
             </div>
-        </div>`;
-    });
+
+            <div class="btns">
+                <button onclick="updateproduct('${elem.productNmae}')" id="update">update</button>
+                <button onclick="deleteProduct(${index})" id="delete">delete</button>
+            </div>
+           </div>`
+  })
+
+
 }
 
-fnt();
+createbtn.addEventListener("click", () => {
+  formdiv.style.display = "flex";
+})
+
+closebtn.addEventListener("click", () => {
+  formdiv.style.display = "none";
+})
 
 form.addEventListener("submit", (event) => {
-    event.preventDefault();
+  event.preventDefault();
 
-    users.push({
-        name: inp1.value,
-        age: inp2.value,
-        img: ui.value
-    });
+  let productNmae = event.target[0].value;
+  let description = event.target[1].value;
+  let price = event.target[2].value;
+  let imgurl = event.target[3].value;
 
-    fnt();
-    form.reset();
-});
+  if (productNmae.trim() === "" || description.trim() === "" || price.trim() === "" || imgurl.trim() === "") {
+    alert("please fill all the fields");
+    return;
+  }
+  let obj = {
+    productNmae,
+    description,
+    price,
+    imgurl,
+  };
+
+   if (updateIndex !== null) {
+    productarr[updateIndex]=obj;
+    updateIndex=null;
+  }
+  else {
+      productarr.push(obj);
+  }
+  ui();
+  form.reset();
+  formdiv.style.display = "none";
+})
+
+let updateproduct = (name) => {
+  formdiv.style.display = "flex";
+  let pro = productarr.find((ele) => ele.productNmae === name);
+  updateIndex = productarr.findIndex((ele) => ele.productNmae === name);
+  form[0].value = pro.productNmae;
+  form[1].value = pro.description;
+  form[2].value = pro.price;
+  form[3].value = pro.imgurl;
+} 
+
+let deleteProduct = (index) => {
+  productarr.splice(index,1);
+  ui();
+}
